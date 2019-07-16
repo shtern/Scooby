@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+
+    <title>Ajax</title>
+
+</head>
+
+<body>
+        <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+        <script>
+            $.ajax({
+                type: "GET",
+                dataType: 'json',
+                url: " http://itc-colors.appspot.com/get_images",
+                success: function (response) {
+                    $.each(response, function (index, val){
+                        $("body").append("<img src=" + val + ">" );
+                    })
+                },
+                error: function (msg) {
+                    alert("No photos- no fun ");
+                }
+
+            });
+        </script>
+  
+
+ 
+
+</body>
+
+</html>
