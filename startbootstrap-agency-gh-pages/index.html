@@ -39,11 +39,11 @@
   <link href='https://api.mapbox.com/mapbox.js/v3.2.0/mapbox.css' rel='stylesheet' />
 
   <script>
-      // Provide your access token
-      L.mapbox.accessToken = 'pk.eyJ1IjoicmFjaGVsaS13aW5lZmllbGQiLCJhIjoiY2p5NzZ6b2VrMDJkbjNub2FmMHFwY20wNSJ9.msVnd7Vzaw4aLW4I1EGbkg';
+    // Provide your access token
+    L.mapbox.accessToken = 'pk.eyJ1IjoicmFjaGVsaS13aW5lZmllbGQiLCJhIjoiY2p5NzZ6b2VrMDJkbjNub2FmMHFwY20wNSJ9.msVnd7Vzaw4aLW4I1EGbkg';
       // Create a map in the div #map
       // L.mapbox.map('map', 'mapbox.streets');
-      </script>
+  </script>
 
 </head>
 
@@ -74,6 +74,9 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav text-uppercase ml-auto">
           <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#portfolio">Map</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#services">Services</a>
           </li>
           <li class="nav-item">
@@ -94,15 +97,21 @@
     
     <div class="container">
       <div class="intro-text">
-        <div class="intro-lead-in">Welcome Tel-Aviv users!</div>
-        <div id="mapDiv" style="width: 100%; height: 500px"></div>
 
+        <h1>scooby</h1>
         <div class="intro-heading text-uppercase"></div>
         <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Show Me More</a>
       </div>
     </div>
   
   </header>
+
+  <!-- Portfolio Grid -->
+  <section class="bg-light page-section" id="portfolio">
+    <div class="container">
+      <div id="mapDiv" style="width: 100%; height: 500px"></div>
+    </div>
+  </section>
 
   <!-- Services -->
   <section class="page-section" id="services">
@@ -344,8 +353,8 @@
     var lon = 34.855499;
     // initialize map
     map = L.mapbox.map('mapDiv').setView([lat, lon], 13)
-    // set map tiles source
-    .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/light-v10'));
+      // set map tiles source
+      .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/light-v10'));
     // add marker to the map
     // marker = L.marker([lat, lon]).addTo(map);
     // // add popup to the marker
