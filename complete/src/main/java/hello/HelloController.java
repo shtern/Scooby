@@ -74,7 +74,7 @@ public class HelloController {
             System.out.println("\t " + res.getJSONObject(i).getString("boardNo"));
             System.out.println("\t " + res.getJSONObject(i).getString("latitude"));
             System.out.println("\t " + res.getJSONObject(i).getString("longitude"));
-            System.out.println("\t " + res.getJSONObject(i).getString("lastReportedTime"));
+            System.out.println("\t " + res.getJSONObject(i).getInt("lastReportedTime"));
             String line = res.getJSONObject(i).getString("boardId") + "," + res.getJSONObject(i).getString("boardNo") +  "," +res.getJSONObject(i).getString("latitude") + "," + res.getJSONObject(i).getString("longitude") + "," + res.getJSONObject(i).getString("lastReportedTime") + "," + res.getJSONObject(i).getString("estimatedRange") + "\n";
             writerCSV.append(line);
 
@@ -87,7 +87,7 @@ public class HelloController {
     private void timed() throws Exception{
         System.out.println("here");
         index("https://api-prod.ibyke.io/v2/boards?latitude=32.05281297232161&longitude=34.77219253778458", true);
-        index("https://api-prod.ibyke.io/v2/boards?latitude32.095595=&longitude=34.783595",true);
+        index("https://api-prod.ibyke.io/v2/boards?latitude=32.095595&longitude=34.783595",true);
         index("https://api-prod.ibyke.io/v2/boards?latitude=32.078153&longitude=34.774472",true);
     }
     
