@@ -1,5 +1,9 @@
 package hello;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -14,8 +18,17 @@ import java.net.URL;
 public class HelloController {
     
     @RequestMapping("/")
-    public String index() throws Exception{
-        URL url = new URL("https://api-prod.ibyke.io/v2/boards?latitude=32.05281297232161&longitude=34.77219253778458");
+    public String getData() throws Exception{
+        StringBuilder sb = new StringBuilder("");
+        sb.append(index("https://api-prod.ibyke.io/v2/boards?latitude=32.05281297232161&longitude=34.77219253778458", true));
+        sb.append(index("https://api-prod.ibyke.io/v2/boards?latitude=32.095595&longitude=34.783595",true));
+        sb.append(index("https://api-prod.ibyke.io/v2/boards?latitude=32.078153&longitude=34.774472",true));
+        return sb.toString();
+    }
+
+
+    public String index(String urlString, Boolean writeToFile) throws Exception{
+        URL url = new URL(urlString);
         HttpURLConnection con = (HttpsURLConnection) url.openConnection();
         con.setRequestProperty("user-agent","ZenBike-New/3.21.0 (iPhone; iOS 12.3.1; Scale/3.00)");
         con.setRequestProperty("x-lang", "en");
@@ -33,11 +46,6 @@ public class HelloController {
         con.setRequestMethod("GET");
 
         int status = con.getResponseCode();
-        File file = new File("data15.txt");
-
-        FileWriter writer = new FileWriter(file);
-
-
 
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
@@ -48,17 +56,39 @@ public class HelloController {
         }
         in.close();
 
-        writer.append(content.toString());
-        writer.close();
+        if(writeToFile) {
+            FileWriter writer = new FileWriter("data15_3points.txt", true);
+            writer.append(content.toString());
+            writer.append(",HERE");
+            writer.close();
+        }
 
+        JSONObject obj = new JSONObject(content.toString());
+
+        FileWriter writerCSV = new FileWriter("data15_3points.csv", true);
+
+        JSONArray res = obj.getJSONArray("items");
+        int length = res.length();
+        for (int i = 0; i < length; i++) {
+            System.out.println(res.getJSONObject(i).getString("boardId"));
+            System.out.println("\t " + res.getJSONObject(i).getString("boardNo"));
+            System.out.println("\t " + res.getJSONObject(i).getString("latitude"));
+            System.out.println("\t " + res.getJSONObject(i).getString("longitude"));
+            System.out.println("\t " + res.getJSONObject(i).getString("lastReportedTime"));
+            String line = res.getJSONObject(i).getString("boardId") + "," + res.getJSONObject(i).getString("boardNo") +  "," +res.getJSONObject(i).getString("latitude") + "," + res.getJSONObject(i).getString("longitude") + "," + res.getJSONObject(i).getString("lastReportedTime") + "," + res.getJSONObject(i).getString("estimatedRange") + "\n";
+            writerCSV.append(line);
+
+        }
+        writerCSV.close();
         return content.toString();
     }
 
-
-    @Scheduled(cron= "* */15 * * * *")
+    @Scheduled(cron= "0 0/15 * * * *")
     private void timed() throws Exception{
         System.out.println("here");
-        index();
+        index("https://api-prod.ibyke.io/v2/boards?latitude=32.05281297232161&longitude=34.77219253778458", true);
+        index("https://api-prod.ibyke.io/v2/boards?latitude32.095595=&longitude=34.783595",true);
+        index("https://api-prod.ibyke.io/v2/boards?latitude=32.078153&longitude=34.774472",true);
     }
     
 }
