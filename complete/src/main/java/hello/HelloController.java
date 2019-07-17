@@ -15,9 +15,6 @@ public class HelloController {
     
     @RequestMapping("/")
     public String index() throws Exception{
-        //URL url = new URL("https://vehicles.scootermap.com/api/vehicles?user_location=32.05282,34.7699463&northeast_point=32.086255, 34.777813&southwest_point=32.078731, 34.766921&company=bird&mode=charge&randomize=false");
-        //URL url = new URL("https://vehicles.scootermap.com/api/vehicles");
-        //URL url = new URL("https://api-prod.ibyke.io/v2/boards?latitude=32.05281297232161&longitude=34.77219253778458");
         URL url = new URL("https://api-prod.ibyke.io/v2/boards?latitude=32.05281297232161&longitude=34.77219253778458");
         HttpURLConnection con = (HttpsURLConnection) url.openConnection();
         con.setRequestProperty("user-agent","ZenBike-New/3.21.0 (iPhone; iOS 12.3.1; Scale/3.00)");
@@ -36,24 +33,9 @@ public class HelloController {
         con.setRequestMethod("GET");
 
         int status = con.getResponseCode();
-//        File file = new File("data.txt");
-//
-//        // creates the file
-//        file.createNewFile();
-//        FileWriter writer = new FileWriter(file);
-//
-//        writer.append("1,2,3,4,5");
-//        writer.append("6,7,8,9,10");
-//        writer.close();
         File file = new File("data15.txt");
 
-        // creates the file
-        //file.createNewFile();
-        System.out.println(file.getAbsolutePath());
-        // creates a FileWriter Object
         FileWriter writer = new FileWriter(file);
-
-        // Writes the content to the file
 
 
 
