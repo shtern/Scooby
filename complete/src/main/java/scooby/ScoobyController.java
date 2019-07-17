@@ -1,21 +1,17 @@
-package hello;
+package scooby;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.scheduling.annotation.Scheduled;
 
-
-import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-public class HelloController {
+public class ScoobyController {
     
     @RequestMapping("/")
     public String getData() throws Exception{
@@ -26,10 +22,36 @@ public class HelloController {
         return sb.toString();
     }
 
+    @RequestMapping("/healthCheck")
+    public String getHealth() throws Exception{
+
+        //String json = "{\"result\":[{\"cluster\":{\"lat\":32,\"lon\":34},\"text\":\"text\"}, \"cluster\":{\"lat\":32,\"lon\":34},\"text\":\"text\"}]}";
+        String json = "{\"result\":[{\"cluster\":{\"lat\":32,\"lon\":31},\"text\":\"text\"},{\"cluster\":{\"lat\":43,\"lon\":42},\"text\":\"text1\"}]}";
+
+        JSONObject obj = new JSONObject(json);
+        return json;
+    }
+
+    @RequestMapping("/getLocations")
+    public String getLocations() throws Exception{
+        URL url1 = new URL("http://127.0.0.1:5000/do_magic");
+        HttpURLConnection con1 = (HttpURLConnection) url1.openConnection();
+        int status1 = con1.getResponseCode();
+        BufferedReader in1 = new BufferedReader(new InputStreamReader(con1.getInputStream()));
+        String inline;
+        StringBuffer cont = new StringBuffer();
+        while((inline = in1.readLine()) != null) {
+            cont.append(inline);
+        }
+        return cont.toString();
+    }
+
+
 
     public String index(String urlString, Boolean writeToFile) throws Exception{
         URL url = new URL(urlString);
-        HttpURLConnection con = (HttpsURLConnection) url.openConnection();
+
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestProperty("user-agent","ZenBike-New/3.21.0 (iPhone; iOS 12.3.1; Scale/3.00)");
         con.setRequestProperty("x-lang", "en");
         con.setRequestProperty("authentication","clientId=A34194B9-D430-4202-9544-D2460A920729;userId=ed2fe992-d851-4bdb-8721-2674991cc97a;ft=9e2b71c2d8d3520b8c29be0b069ad0c5");
@@ -45,8 +67,6 @@ public class HelloController {
 
         con.setRequestMethod("GET");
 
-        int status = con.getResponseCode();
-
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
         String inputLine;
@@ -57,7 +77,7 @@ public class HelloController {
         in.close();
 
         if(writeToFile) {
-            FileWriter writer = new FileWriter("data15_3points.txt", true);
+            FileWriter writer = new FileWriter("data15_7points.txt", true);
             writer.append(content.toString());
             writer.append(",HERE");
             writer.close();
@@ -65,19 +85,13 @@ public class HelloController {
 
         JSONObject obj = new JSONObject(content.toString());
 
-        FileWriter writerCSV = new FileWriter("data15_3points.csv", true);
+        FileWriter writerCSV = new FileWriter("data15_7pointsVol.csv", true);
 
         JSONArray res = obj.getJSONArray("items");
         int length = res.length();
         for (int i = 0; i < length; i++) {
-            System.out.println(res.getJSONObject(i).getString("boardId"));
-            System.out.println("\t " + res.getJSONObject(i).getString("boardNo"));
-            System.out.println("\t " + res.getJSONObject(i).getString("latitude"));
-            System.out.println("\t " + res.getJSONObject(i).getString("longitude"));
-            System.out.println("\t " + res.getJSONObject(i).getInt("lastReportedTime"));
-            String line = res.getJSONObject(i).getString("boardId") + "," + res.getJSONObject(i).getString("boardNo") +  "," +res.getJSONObject(i).getString("latitude") + "," + res.getJSONObject(i).getString("longitude") + "," + res.getJSONObject(i).getString("lastReportedTime") + "," + res.getJSONObject(i).getString("estimatedRange") + "\n";
+            String line = res.getJSONObject(i).getString("boardId") + "," + res.getJSONObject(i).getString("boardNo") +  "," +res.getJSONObject(i).getString("latitude") + "," + res.getJSONObject(i).getString("longitude") + "," + res.getJSONObject(i).getInt("lastReportedTime") + "," + res.getJSONObject(i).getString("estimatedRange") + ","+res.getJSONObject(i).getString("vol") + "\n";
             writerCSV.append(line);
-
         }
         writerCSV.close();
         return content.toString();
@@ -85,10 +99,14 @@ public class HelloController {
 
     @Scheduled(cron= "0 0/15 * * * *")
     private void timed() throws Exception{
-        System.out.println("here");
         index("https://api-prod.ibyke.io/v2/boards?latitude=32.05281297232161&longitude=34.77219253778458", true);
         index("https://api-prod.ibyke.io/v2/boards?latitude=32.095595&longitude=34.783595",true);
         index("https://api-prod.ibyke.io/v2/boards?latitude=32.078153&longitude=34.774472",true);
+        index("https://api-prod.ibyke.io/v2/boards?latitude=32.060212&longitude=34.760442",true);
+        index("https://api-prod.ibyke.io/v2/boards?latitude=32.073225&longitude=34.789651",true);
+        index("https://api-prod.ibyke.io/v2/boards?latitude=32.091072&longitude=34.790440",true);
+        index("https://api-prod.ibyke.io/v2/boards?latitude=32.113158&longitude=34.804926",true);
+        index("https://api-prod.ibyke.io/v2/boards?latitude=32.109189&longitude=34.794630",true);
     }
     
 }

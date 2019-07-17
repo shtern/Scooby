@@ -1,4 +1,4 @@
-package hello;
+package scooby;
 
 
 import org.springframework.boot.CommandLineRunner;
