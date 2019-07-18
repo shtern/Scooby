@@ -32,6 +32,6 @@ dependencies {
     // end::actuator[]
     // tag::tests[]
     testCompile("org.springframework.boot:spring-boot-starter-test")
+    compile group: 'org.json', name: 'json', version: '20180130'
     // end::tests[]
 }
-
