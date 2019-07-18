@@ -68,10 +68,11 @@
             <a class="nav-link js-scroll-trigger" href="#services" style="color:gold; font-weight:bold">Services</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#about" style="color:gold;font-weight:bold" >Our Recommendation</a>
+            <a class="nav-link js-scroll-trigger" href="#about" style="color:gold;font-weight:bold">Our
+              Recommendation</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#contact" style="color:gold;font-weight:bold" >Contact</a>
+            <a class="nav-link js-scroll-trigger" href="#contact" style="color:gold;font-weight:bold">Contact</a>
           </li>
         </ul>
       </div>
@@ -92,12 +93,12 @@
 
   <!-- Portfolio Grid -->
   <section class="bg-light page-section" id="portfolio">
-      <form class="bar" >
-        Numbers of parking spots:
-        <input id="amount_of_scooters" type="range" name="points" min="100" max="300" onchange="updateTextInput()">
+    <form class="bar">
+      Numbers of parking spots:
+      <input id="amount_of_scooters" type="range" name="points" min="100" max="300" onchange="updateTextInput()">
 
-        
-      </form>
+
+    </form>
     <div class="container">
       <div id="mapDiv" style="width: 100%; height: 500px"></div>
     </div>
@@ -161,9 +162,9 @@
                   <h4 class="subheading">Parking spots</h4>
                 </div>
                 <div class="timeline-body">
-                    <p class="text-muted">
-                        <br /><b style="color:gold">Scooby</b> recommends you the best places to set up a parking spot based
-                        on the scooters concentration </p>
+                  <p class="text-muted">
+                    <br /><b style="color:gold">Scooby</b> recommends you the best places to set up a parking spot based
+                    on the scooters concentration </p>
                 </div>
               </div>
             </li>
@@ -315,34 +316,165 @@
   <script>
     // var myurl;
 
+    // var map;
+
+    // window.onload = function load() {
+
+    //   var num_of_scotters = document.getElementById('amount_of_scooters').value;
+    //   console.log(num_of_scotters)
+
+    //   var url = `http://ilana.localhost.run/getLocations/${num_of_scotters}`;
+    //   // myurl = url
+    //   var geojson = [];
+
+    //   console.log(url)
+    //   $.ajax({
+    //     type: "GET",
+    //     // dataType: "json",
+    //     url: url,
+    //     success: function (response) {
+    //       var obj = JSON.parse(response);
+    //       var parsed_arr = obj.result
+    //       parsed_arr.forEach(function (element) {
+    //         if (element.provider == "Bird"){
+    //           var color = "#717171";
+    //         } else {
+    //           var color = "#FEC810";
+    //         }
+    //         geojson.push({
+    //           type: 'Feature',
+    //           geometry: {
+    //             type: 'Point',
+    //             coordinates: [element.cluster.lon, element.cluster.lat]
+    //           },
+    //           properties: {
+    //             title: element.provider,
+    //             "marker-size": "small",
+    //             "marker-symbol": "scooter",
+    //             "marker-color": color,
+    //           }
+    //         });
+    //       });
+    //       var lat = 32.109333;
+    //       var lon = 34.855499;
+    //       // initialize map
+    //       map = L.mapbox.map('mapDiv').setView([lat, lon], 13)
+    //         // set map tiles source
+    //         .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/light-v10'));
+
+    //       var myLayer = L.mapbox.featureLayer().addTo(map);
+    //       myLayer.on('layeradd', function (e) {
+    //         var marker = e.layer,
+    //           feature = marker.feature;
+    //         var content = '<p><strong>' + feature.properties.title + '</strong></p>';
+    //         marker.bindPopup(content).openPopup();;
+    //       });
+    //       myLayer.setGeoJSON(geojson);
+    //       map.scrollWheelZoom.disable();
+    //     },
+    //     error: function (msg) {
+    //       alert("error");
+    //     },
+    //     complete: function (response, status) {
+    //       console.log("complete", status);
+    //     }
+    //   });
+    // };
+
+    // map = map;
+    // function updateTextInput(amount) {
+    //   var num_of_scotters = document.getElementById('amount_of_scooters').value;
+    //   console.log(num_of_scotters)
+    //   var num_of_scotters = document.getElementById('amount_of_scooters').value;
+    //   console.log(num_of_scotters)
+
+    //   var url = `http://ilana.localhost.run/getLocations/${num_of_scotters}`;
+    //   // myurl = url
+    //   var geojson = [];
+
+    //   console.log(url)
+    //   $.ajax({
+    //     type: "GET",
+    //     // dataType: "json",
+    //     url: url,
+    //     success: function (response) {
+    //       var obj = JSON.parse(response);
+    //       var parsed_arr = obj.result
+    //       parsed_arr.forEach(function (element) {
+    //         geojson.push({
+    //           type: 'Feature',
+    //           geometry: {
+    //             type: 'Point',
+    //             coordinates: [element.cluster.lon, element.cluster.lat]
+    //           },
+    //           properties: {
+    //             title: element.text
+    //           }
+    //         });
+    //       });
+    //       var lat = 32.109333;
+    //       var lon = 34.855499;
+    //       // initialize map
+    //       map 
+    //       // = L.mapbox.map('mapDiv').setView([lat, lon], 13)
+    //         // set map tiles source
+    //         .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/light-v10'));
+
+    //       var myLayer = L.mapbox.featureLayer().addTo(map);
+    //       myLayer.on('layeradd', function (e) {
+    //         var marker = e.layer,
+    //           feature = marker.feature;
+    //         var content = '<p><strong>' + feature.properties.title + '</strong></p>';
+    //         marker.bindPopup(content).openPopup();;
+    //       });
+    //       myLayer.setGeoJSON(geojson);
+    //       map.scrollWheelZoom.disable();
+    //     },
+    //     error: function (msg) {
+    //       alert("error");
+    //     },
+    //     complete: function (response, status) {
+    //       console.log("complete", status);
+    //     }
+    //   });
+    // }
+
+
+
+
+    // the scooters view -- the defult view
+
     var map;
 
     window.onload = function load() {
-
       var num_of_scotters = document.getElementById('amount_of_scooters').value;
-      console.log(num_of_scotters)
-
-      var url = `http://ilana.localhost.run/getLocations/${num_of_scotters}`;
-      // myurl = url
+      var url = `http://ilana.localhost.run/getScooters`;
       var geojson = [];
 
-      console.log(url)
       $.ajax({
         type: "GET",
         // dataType: "json",
         url: url,
         success: function (response) {
           var obj = JSON.parse(response);
-          var parsed_arr = obj.result
+          var parsed_arr = obj.Scooters
           parsed_arr.forEach(function (element) {
+            if (element.data.provider == "Bird") {
+              var color = "#717171";
+            } else {
+              var color = "#FEC810";
+            }
             geojson.push({
               type: 'Feature',
               geometry: {
                 type: 'Point',
-                coordinates: [element.cluster.lon, element.cluster.lat]
+                coordinates: [element.data.lon, element.data.lat]
               },
               properties: {
-                title: element.text
+                title: element.data.provider,
+                "marker-size": "small",
+                "marker-symbol": "scooter",
+                "marker-color": color,
               }
             });
           });
@@ -358,65 +490,7 @@
             var marker = e.layer,
               feature = marker.feature;
             var content = '<p><strong>' + feature.properties.title + '</strong></p>';
-            marker.bindPopup(content).openPopup();;
-          });
-          myLayer.setGeoJSON(geojson);
-          map.scrollWheelZoom.disable();
-        },
-        error: function (msg) {
-          alert("error");
-        },
-        complete: function (response, status) {
-          console.log("complete", status);
-        }
-      });
-    };
-
-    map = map;
-    function updateTextInput(amount) {
-      var num_of_scotters = document.getElementById('amount_of_scooters').value;
-      console.log(num_of_scotters)
-      var num_of_scotters = document.getElementById('amount_of_scooters').value;
-      console.log(num_of_scotters)
-
-      var url = `http://ilana.localhost.run/getLocations/${num_of_scotters}`;
-      // myurl = url
-      var geojson = [];
-
-      console.log(url)
-      $.ajax({
-        type: "GET",
-        // dataType: "json",
-        url: url,
-        success: function (response) {
-          var obj = JSON.parse(response);
-          var parsed_arr = obj.result
-          parsed_arr.forEach(function (element) {
-            geojson.push({
-              type: 'Feature',
-              geometry: {
-                type: 'Point',
-                coordinates: [element.cluster.lon, element.cluster.lat]
-              },
-              properties: {
-                title: element.text
-              }
-            });
-          });
-          var lat = 32.109333;
-          var lon = 34.855499;
-          // initialize map
-          map 
-          // = L.mapbox.map('mapDiv').setView([lat, lon], 13)
-            // set map tiles source
-            .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/light-v10'));
-
-          var myLayer = L.mapbox.featureLayer().addTo(map);
-          myLayer.on('layeradd', function (e) {
-            var marker = e.layer,
-              feature = marker.feature;
-            var content = '<p><strong>' + feature.properties.title + '</strong></p>';
-            marker.bindPopup(content).openPopup();;
+            marker.bindPopup(content).openPopup();
           });
           myLayer.setGeoJSON(geojson);
           map.scrollWheelZoom.disable();
@@ -429,6 +503,8 @@
         }
       });
     }
+
+
 
 
 
