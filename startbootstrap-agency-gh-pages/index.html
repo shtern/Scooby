@@ -86,22 +86,35 @@
 
         <img class="logo" src="../images/scoobyLogoYellow.png">
         <div class="intro-heading text-uppercase"></div>
-        <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#portfolio">Get Started !</a>
+        <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#portfolio" onclick="load()">Get Started !</a>
       </div>
     </div>
   </header>
 
   <!-- Portfolio Grid -->
   <section class="bg-light page-section" id="portfolio">
+      <div class="togglebutton">
+          <button class="switchbutton" onclick="change_ser()">Switch to parking spots</button>
+          
+        </div>
     <form class="bar">
       Numbers of parking spots:
       <input id="amount_of_scooters" type="range" name="points" min="100" max="300" onchange="updateTextInput()">
-
+    
 
     </form>
+    <!-- <button onclick="change_ser()">switch</button> -->
     <div class="container">
       <div id="mapDiv" style="width: 100%; height: 500px"></div>
     </div>
+
+    <div class="container">
+        <div id="mapDiv2" style="width: 100%; height: 500px"></div>
+      </div>
+
+      <div class="container">
+          <div id="mapDiv3" style="width: 100%; height: 500px"></div>
+        </div>
   </section>
 
   <!-- Services -->
@@ -314,146 +327,17 @@
 
   <!-- map -->
   <script>
-    // var myurl;
-
-    // var map;
-
-    // window.onload = function load() {
-
-    //   var num_of_scotters = document.getElementById('amount_of_scooters').value;
-    //   console.log(num_of_scotters)
-
-    //   var url = `http://ilana.localhost.run/getLocations/${num_of_scotters}`;
-    //   // myurl = url
-    //   var geojson = [];
-
-    //   console.log(url)
-    //   $.ajax({
-    //     type: "GET",
-    //     // dataType: "json",
-    //     url: url,
-    //     success: function (response) {
-    //       var obj = JSON.parse(response);
-    //       var parsed_arr = obj.result
-    //       parsed_arr.forEach(function (element) {
-    //         if (element.provider == "Bird"){
-    //           var color = "#717171";
-    //         } else {
-    //           var color = "#FEC810";
-    //         }
-    //         geojson.push({
-    //           type: 'Feature',
-    //           geometry: {
-    //             type: 'Point',
-    //             coordinates: [element.cluster.lon, element.cluster.lat]
-    //           },
-    //           properties: {
-    //             title: element.provider,
-    //             "marker-size": "small",
-    //             "marker-symbol": "scooter",
-    //             "marker-color": color,
-    //           }
-    //         });
-    //       });
-    //       var lat = 32.109333;
-    //       var lon = 34.855499;
-    //       // initialize map
-    //       map = L.mapbox.map('mapDiv').setView([lat, lon], 13)
-    //         // set map tiles source
-    //         .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/light-v10'));
-
-    //       var myLayer = L.mapbox.featureLayer().addTo(map);
-    //       myLayer.on('layeradd', function (e) {
-    //         var marker = e.layer,
-    //           feature = marker.feature;
-    //         var content = '<p><strong>' + feature.properties.title + '</strong></p>';
-    //         marker.bindPopup(content).openPopup();;
-    //       });
-    //       myLayer.setGeoJSON(geojson);
-    //       map.scrollWheelZoom.disable();
-    //     },
-    //     error: function (msg) {
-    //       alert("error");
-    //     },
-    //     complete: function (response, status) {
-    //       console.log("complete", status);
-    //     }
-    //   });
-    // };
-
-    // map = map;
-    // function updateTextInput(amount) {
-    //   var num_of_scotters = document.getElementById('amount_of_scooters').value;
-    //   console.log(num_of_scotters)
-    //   var num_of_scotters = document.getElementById('amount_of_scooters').value;
-    //   console.log(num_of_scotters)
-
-    //   var url = `http://ilana.localhost.run/getLocations/${num_of_scotters}`;
-    //   // myurl = url
-    //   var geojson = [];
-
-    //   console.log(url)
-    //   $.ajax({
-    //     type: "GET",
-    //     // dataType: "json",
-    //     url: url,
-    //     success: function (response) {
-    //       var obj = JSON.parse(response);
-    //       var parsed_arr = obj.result
-    //       parsed_arr.forEach(function (element) {
-    //         geojson.push({
-    //           type: 'Feature',
-    //           geometry: {
-    //             type: 'Point',
-    //             coordinates: [element.cluster.lon, element.cluster.lat]
-    //           },
-    //           properties: {
-    //             title: element.text
-    //           }
-    //         });
-    //       });
-    //       var lat = 32.109333;
-    //       var lon = 34.855499;
-    //       // initialize map
-    //       map 
-    //       // = L.mapbox.map('mapDiv').setView([lat, lon], 13)
-    //         // set map tiles source
-    //         .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/light-v10'));
-
-    //       var myLayer = L.mapbox.featureLayer().addTo(map);
-    //       myLayer.on('layeradd', function (e) {
-    //         var marker = e.layer,
-    //           feature = marker.feature;
-    //         var content = '<p><strong>' + feature.properties.title + '</strong></p>';
-    //         marker.bindPopup(content).openPopup();;
-    //       });
-    //       myLayer.setGeoJSON(geojson);
-    //       map.scrollWheelZoom.disable();
-    //     },
-    //     error: function (msg) {
-    //       alert("error");
-    //     },
-    //     complete: function (response, status) {
-    //       console.log("complete", status);
-    //     }
-    //   });
-    // }
-
-
-
-
     // the scooters view -- the defult view
-
     var map;
-
-    window.onload = function load() {
+  window.onload = function load() {
+    $("#mapDiv2").css("display", "none")
+    $("#mapDiv3").css("display", "none")
       var num_of_scotters = document.getElementById('amount_of_scooters').value;
       var url = `http://ilana.localhost.run/getScooters`;
       var geojson = [];
 
       $.ajax({
         type: "GET",
-        // dataType: "json",
         url: url,
         success: function (response) {
           var obj = JSON.parse(response);
@@ -504,6 +388,135 @@
       });
     }
 
+
+
+    var map2;
+    function change_ser() {
+      console.log("happend")
+      $("#mapDiv").css("display", "none")
+      $("#mapDiv2").css("display", "block")
+      var num_of_scotters2 = document.getElementById('amount_of_scooters').value;
+      console.log(num_of_scotters2)
+
+      var url2 = `http://ilana.localhost.run/getLocations/${num_of_scotters2}`;
+      // myurl = url
+      var geojson2 = [];
+
+      console.log(url2)
+      $.ajax({
+        type: "GET",
+        url: `http://ilana.localhost.run/getLocations/${num_of_scotters2}`,
+        success: function (response) {
+          console.log("sucsses")
+          var obj = JSON.parse(response);
+          var parsed_arr = obj.result
+          parsed_arr.forEach(function (element) {
+            // if (element.provider == "Bird") {
+            //   var color = "#717171";
+            // } else {
+            //   var color = "#FEC810";
+            // }
+            geojson2.push({
+              type: 'Feature',
+              geometry: {
+                type: 'Point',
+                coordinates: [element.cluster.lon, element.cluster.lat]
+              },
+              properties: {
+                title: element.provider,
+                "marker-size": "small",
+                "marker-symbol": "parking",
+                "marker-color": "#274d8a",
+              }
+            });
+          });
+          var lat = 32.109333;
+          var lon = 34.855499;
+          // initialize map
+          map2 = L.mapbox.map('mapDiv2').setView([lat, lon], 13).setView([lat, lon], 13)
+            // set map tiles source
+            .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/light-v10'));
+
+          var myLayer = L.mapbox.featureLayer().addTo(map2);
+          myLayer.on('layeradd', function (e) {
+            var marker = e.layer,
+              feature = marker.feature;
+            var content = '<p><strong>' + feature.properties.title + '</strong></p>';
+            marker.bindPopup(content).openPopup();;
+          });
+          myLayer.setGeoJSON(geojson2);
+          map2.scrollWheelZoom.disable();
+        },
+        error: function (msg) {
+          alert("error");
+        },
+        complete: function (response, status) {
+          console.log("complete", status);
+        }
+      });
+    };
+
+    var map3;
+    function updateTextInput(amount) {
+      $("#mapDiv2").css("display", "none")
+      $("#mapDiv3").css("display", "block")
+      var num_of_scotters3 = document.getElementById('amount_of_scooters').value;
+      console.log(num_of_scotters3)
+      var num_of_scotters3 = document.getElementById('amount_of_scooters').value;
+      console.log(num_of_scotters3)
+
+      var url3 = `http://ilana.localhost.run/getLocations/${num_of_scotters3}`;
+      // myurl = url
+      var geojson3 = [];
+
+      console.log(url3)
+      $.ajax({
+        type: "GET",
+        // dataType: "json",
+        url: url3,
+        success: function (response) {
+          var obj = JSON.parse(response);
+          var parsed_arr = obj.result
+          parsed_arr.forEach(function (element) {
+            geojson3.push({
+              type: 'Feature',
+              geometry: {
+                type: 'Point',
+                coordinates: [element.cluster.lon, element.cluster.lat]
+              },
+              properties: {
+                title: element.text,
+                "marker-size": "small",
+                "marker-symbol": "parking",
+                "marker-color": "#274d8a",
+              }
+            });
+          });
+          var lat = 32.109333;
+          var lon = 34.855499;
+          // initialize map
+          map3 = L.mapbox.map('mapDiv3').setView([lat, lon], 13).setView([lat, lon], 13)
+            // set map tiles source
+            .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/light-v10'));
+
+          var myLayer = L.mapbox.featureLayer().addTo(map3);
+          myLayer.on('layeradd', function (e) {
+            var marker = e.layer,
+              feature = marker.feature;
+            var content = '<p><strong>' + feature.properties.title + '</strong></p>';
+            marker.bindPopup(content).openPopup();
+          });
+          myLayer.setGeoJSON(geojson3);
+          map3.scrollWheelZoom.disable();
+        },
+        error: function (msg) {
+          alert("error");
+        },
+        complete: function (response, status) {
+          console.log("complete", status);
+        }
+      });
+    }
 
 
 
