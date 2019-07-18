@@ -34,11 +34,11 @@ def get_json(centers):
     return json.dumps({'result':result})
 
 
-@app.route('/do_magic')
-def do_magic():
+@app.route('/do_magic/{clusters_count}')
+def do_magic(clusters_count):
     df = read_df()
     centers=get_centers(df)
-    return get_json(centers)
+    return get_json(centers)[:clusters_count]
 
 @app.route('/')
 def hello_world():
