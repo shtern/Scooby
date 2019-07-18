@@ -44,6 +44,9 @@
       // Create a map in the div #map
       // L.mapbox.map('map', 'mapbox.streets');
   </script>
+  <script>
+
+  </script>
 
 </head>
 
@@ -89,12 +92,12 @@
 
   <!-- Portfolio Grid -->
   <section class="bg-light page-section" id="portfolio">
-      <form class="bar" >
-        Numbers of scooters:
-        <input id="amount_of_scooters" type="range" name="points" min="100" max="300" onchange="updateTextInput()">
-        <input type="submit">
-        
-      </form>
+    <form class="bar">
+      Numbers of scooters:
+      <input id="amount_of_scooters" type="range" name="points" min="100" max="300" onchange="updateTextInput()">
+      <!-- <input type="submit"> -->
+
+    </form>
     <div class="container">
       <div id="mapDiv" style="width: 100%; height: 500px"></div>
     </div>
@@ -158,9 +161,9 @@
                   <h4 class="subheading">Parking spots</h4>
                 </div>
                 <div class="timeline-body">
-                    <p class="text-muted">Due to new regulations, scooters must be parked in dedicated spots.
-                        Municipalities and scooters companies will have to find or build these spot in the smartest way for the city. 
-                        <br/><b style="color:gold" >Scooby</b> recommends you the best places to set up a parking spot based on the scooters concentration </p>
+                  <p class="text-muted">
+                    <br /><b style="color:gold">Scooby</b> recommends you the best places to set up a parking spot based
+                    on the scooters concentration </p>
                 </div>
               </div>
             </li>
@@ -173,7 +176,8 @@
                   <h4 class="subheading">Charging spots</h4>
                 </div>
                 <div class="timeline-body">
-                    <p class="text-muted">With <b style="color:gold">Scooby</b>, you can check the concentration of scooters and decide the relevant plsace to set up a charging stations</p>
+                  <p class="text-muted">With <b style="color:gold">Scooby</b>, you can check the concentration of
+                    scooters and decide the relevant plsace to set up a charging stations</p>
                 </div>
               </div>
             </li>
@@ -183,10 +187,10 @@
               </div>
               <div class="timeline-panel">
                 <div class="timeline-heading">
-                  <h4 class="subheading">Find the best way!</h4>
+                  <h4 class="subheading">Coming Soon!</h4>
                 </div>
                 <div class="timeline-body">
-                  <p class="text-muted">recommends you the bes</p>
+                  <p class="text-muted">Find the best way!recommends you the bes</p>
                 </div>
               </div>
             </li>
@@ -309,81 +313,124 @@
 
   <!-- map -->
   <script>
-    // $.get("http://ilana.localhost.run/healthCheck", function (data){
-    //   // $(".result").html(data);
-    //   alert("good");
-    // }  );
-    // $.ajax({
-    // type: "GET",
-    // // dataType: 'json',
-    // url: "http://ilana.localhost.run/healthCheck",
-    // success: function (response) {
-    //   console.log(response)
-    //   alert(response)
-    // },
-    //   var obj = jQuery.parseJSON(response);
-    //   geojson.push(
-    //     {
-    //       type: 'Feature',
-    //       geometry: {
-    //         type: 'Point',
-    //         coordinates: [response["lat"], response["lon"]]
-    //       }
-    //     });
-    // },
-    //   error: function (msg) {
-    //     alert("no");
-    //   }
+    // var myurl;
 
-    // });
+    var map;
 
+    window.onload = function load() {
 
-    var geojson = [];
+      var num_of_scotters = document.getElementById('amount_of_scooters').value;
+      console.log(num_of_scotters)
 
+      var url = `http://ilana.localhost.run/getLocations/${num_of_scotters}`;
+      // myurl = url
+      var geojson = [];
 
-    $.ajax({
-      type: "GET",
-      // dataType: "json",
-      url: "http://ilana.localhost.run/getLocations/1",
-      success: function (response) {
-        var obj = JSON.parse(response);
-        var parsed_arr = obj.result
-        parsed_arr.forEach(function (element) {
-          geojson.push({
-            type: 'Feature',
-            geometry: {
-              type: 'Point',
-              coordinates: [element.cluster.lon, element.cluster.lat]
-            },
-            properties: {
-              title: element.text
-            }
+      console.log(url)
+      $.ajax({
+        type: "GET",
+        // dataType: "json",
+        url: url,
+        success: function (response) {
+          var obj = JSON.parse(response);
+          var parsed_arr = obj.result
+          parsed_arr.forEach(function (element) {
+            geojson.push({
+              type: 'Feature',
+              geometry: {
+                type: 'Point',
+                coordinates: [element.cluster.lon, element.cluster.lat]
+              },
+              properties: {
+                title: element.text
+              }
+            });
           });
-        });
-        var lat = 32.109333;
-        var lon = 34.855499;
-        // initialize map
-        map = L.mapbox.map('mapDiv').setView([lat, lon], 13)
-          // set map tiles source
-          .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/light-v10'));
+          var lat = 32.109333;
+          var lon = 34.855499;
+          // initialize map
+          map = L.mapbox.map('mapDiv').setView([lat, lon], 13)
+            // set map tiles source
+            .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/light-v10'));
 
-        var myLayer = L.mapbox.featureLayer().addTo(map);
-        myLayer.on('layeradd', function (e) {
-          var marker = e.layer,
-            feature = marker.feature;
-          var content = '<p><strong>' + feature.properties.title + '</strong></p>';
-          marker.bindPopup(content).openPopup();;
-        });
-        myLayer.setGeoJSON(geojson);
-        map.scrollWheelZoom.disable();
-      },
-      error: function (msg) {
-        alert("error");
-      },
-      complete: function (response, status) {
-        console.log("complete", status);
-      }
-    });
+          var myLayer = L.mapbox.featureLayer().addTo(map);
+          myLayer.on('layeradd', function (e) {
+            var marker = e.layer,
+              feature = marker.feature;
+            var content = '<p><strong>' + feature.properties.title + '</strong></p>';
+            marker.bindPopup(content).openPopup();;
+          });
+          myLayer.setGeoJSON(geojson);
+          map.scrollWheelZoom.disable();
+        },
+        error: function (msg) {
+          alert("error");
+        },
+        complete: function (response, status) {
+          console.log("complete", status);
+        }
+      });
+    };
+
+    map = map;
+    function updateTextInput(amount) {
+      var num_of_scotters = document.getElementById('amount_of_scooters').value;
+      console.log(num_of_scotters)
+      var num_of_scotters = document.getElementById('amount_of_scooters').value;
+      console.log(num_of_scotters)
+
+      var url = `http://ilana.localhost.run/getLocations/${num_of_scotters}`;
+      // myurl = url
+      var geojson = [];
+
+      console.log(url)
+      $.ajax({
+        type: "GET",
+        // dataType: "json",
+        url: url,
+        success: function (response) {
+          var obj = JSON.parse(response);
+          var parsed_arr = obj.result
+          parsed_arr.forEach(function (element) {
+            geojson.push({
+              type: 'Feature',
+              geometry: {
+                type: 'Point',
+                coordinates: [element.cluster.lon, element.cluster.lat]
+              },
+              properties: {
+                title: element.text
+              }
+            });
+          });
+          var lat = 32.109333;
+          var lon = 34.855499;
+          // initialize map
+          map 
+          // = L.mapbox.map('mapDiv').setView([lat, lon], 13)
+            // set map tiles source
+            .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/light-v10'));
+
+          var myLayer = L.mapbox.featureLayer().addTo(map);
+          myLayer.on('layeradd', function (e) {
+            var marker = e.layer,
+              feature = marker.feature;
+            var content = '<p><strong>' + feature.properties.title + '</strong></p>';
+            marker.bindPopup(content).openPopup();;
+          });
+          myLayer.setGeoJSON(geojson);
+          map.scrollWheelZoom.disable();
+        },
+        error: function (msg) {
+          alert("error");
+        },
+        complete: function (response, status) {
+          console.log("complete", status);
+        }
+      });
+    }
+
+
 
 
 
