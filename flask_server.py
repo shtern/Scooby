@@ -34,7 +34,7 @@ def get_json(centers):
     return json.dumps({'result':result})
 
 
-@app.route('/do_magic/{clusters_count}')
+@app.route('/do_magic/<int:clusters_count>')
 def do_magic(clusters_count):
     df = read_df()
     centers=get_centers(df)
