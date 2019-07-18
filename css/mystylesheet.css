@@ -25,4 +25,14 @@
     display: flex;
     justify-content: center;
     align-content: center;
+
+}
+
+.logo{
+    width:50%;
+    height:50%;
+}
+.logonavbar{
+    width:8%;
+    height:8%;
 }
