@@ -36,3 +36,39 @@
     width:8%;
     height:8%;
 }
+
+.switchbutton{
+    background-color:gold;
+    border-radius:50px;
+    color:white;
+    border:2px solid grey;
+    margin:20px;
+    
+
+}
+.togglebutton{
+    display:flex;
+    text-align: center;
+    justify-content: center;
+
+}
+.bar{
+    display:none;
+}
+
+
+.gify{
+    width:100%;
+    height:200%;
+    position:absolute;
+    transition: width 2s, height 4s;
+}
+.scootgyf{
+    width:10%;
+    height:10%;
+    position:relative;
+    right:0; 
+    transition: width 2s, height 4s;
+   
+
+}
