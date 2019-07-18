@@ -80,7 +80,7 @@
     <div class="container">
       <div class="intro-text">
 
-        <h1>scooby</h1>
+        <h1 class="logo">scooby</h1>
         <div class="intro-heading text-uppercase"></div>
         <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#portfolio">Show Me More</a>
       </div>
@@ -89,6 +89,12 @@
 
   <!-- Portfolio Grid -->
   <section class="bg-light page-section" id="portfolio">
+      <form class="bar" >
+        Numbers of scooters:
+        <input id="amount_of_scooters" type="range" name="points" min="100" max="300" onchange="updateTextInput()">
+        <input type="submit">
+        
+      </form>
     <div class="container">
       <div id="mapDiv" style="width: 100%; height: 500px"></div>
     </div>
@@ -145,46 +151,42 @@
           <ul class="timeline">
             <li>
               <div class="timeline-image">
-                <img class="rounded-circle img-fluid" src="img/about/1.jpg" alt="">
+                <img class="rounded-circle img-fluid" src="../images/parkingicon2.jpg" alt="">
               </div>
               <div class="timeline-panel">
                 <div class="timeline-heading">
                   <h4 class="subheading">Parking spots</h4>
                 </div>
                 <div class="timeline-body">
-                  <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum
-                    eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et
-                    ea quo dolore laudantium consectetur!</p>
+                    <p class="text-muted">Due to new regulations, scooters must be parked in dedicated spots.
+                        Municipalities and scooters companies will have to find or build these spot in the smartest way for the city. 
+                        <br/><b style="color:gold" >Scooby</b> recommends you the best places to set up a parking spot based on the scooters concentration </p>
                 </div>
               </div>
             </li>
             <li class="timeline-inverted">
               <div class="timeline-image">
-                <img class="rounded-circle img-fluid" src="img/about/2.jpg" alt="">
+                <img class="rounded-circle img-fluid" src="../images/charge.jpg" alt="">
               </div>
               <div class="timeline-panel">
                 <div class="timeline-heading">
                   <h4 class="subheading">Charging spots</h4>
                 </div>
                 <div class="timeline-body">
-                  <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum
-                    eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et
-                    ea quo dolore laudantium consectetur!</p>
+                    <p class="text-muted">With <b style="color:gold">Scooby</b>, you can check the concentration of scooters and decide the relevant plsace to set up a charging stations</p>
                 </div>
               </div>
             </li>
             <li>
               <div class="timeline-image">
-                <img class="rounded-circle img-fluid" src="img/about/3.jpg" alt="">
+                <img class="rounded-circle img-fluid" src="../images/path.jpg" alt="">
               </div>
               <div class="timeline-panel">
                 <div class="timeline-heading">
-                  <h4 class="subheading">Travel Path's</h4>
+                  <h4 class="subheading">Find the best way!</h4>
                 </div>
                 <div class="timeline-body">
-                  <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum
-                    eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et
-                    ea quo dolore laudantium consectetur!</p>
+                  <p class="text-muted">recommends you the bes</p>
                 </div>
               </div>
             </li>
@@ -342,7 +344,7 @@
     $.ajax({
       type: "GET",
       // dataType: "json",
-      url: "http://ilana2.localhost.run/getLocations",
+      url: "http://ilana.localhost.run/getLocations/1",
       success: function (response) {
         var obj = JSON.parse(response);
         var parsed_arr = obj.result
