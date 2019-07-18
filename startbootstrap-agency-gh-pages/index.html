@@ -342,7 +342,7 @@
     $.ajax({
       type: "GET",
       // dataType: "json",
-      url: "http://ilana.localhost.run/healthCheck",
+      url: "http://ilana2.localhost.run/getLocations",
       success: function (response) {
         var obj = JSON.parse(response);
         var parsed_arr = obj.result
@@ -351,7 +351,7 @@
             type: 'Feature',
             geometry: {
               type: 'Point',
-              coordinates: [element.cluster.lat, element.cluster.lon]
+              coordinates: [element.cluster.lon, element.cluster.lat]
             },
             properties: {
               title: element.text
