@@ -86,34 +86,26 @@
 
         <img class="logo" src="../images/scoobyLogoYellow.png">
         <div class="intro-heading text-uppercase"></div>
-        <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#portfolio" onclick="load()">Get Started !</a>
+        <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#portfolio" onclick="load()">Get
+          Started !</a>
       </div>
     </div>
   </header>
 
- 
+
 
   <!-- Portfolio Grid -->
   <section class="bg-light page-section" id="portfolio">
-<<<<<<< HEAD
-      <div class="togglebutton">
-          <button class="switchbutton" onclick="change_ser()">Switch to parking spots</button>
-          
-        </div>
+    <div class="togglebutton">
+      <button class="switchbutton" onclick="change_ser()">Switch</button>
+
+    </div>
     <form class="bar">
       Numbers of parking spots:
+      <div id="amount_of_scooters2">
       <input id="amount_of_scooters" type="range" name="points" min="100" max="300" onchange="updateTextInput()">
-    
-=======
-    <div class="togglebutton">
-    <button class="switchbutton">Switch to parking spots</button>
-    
-  </div>
-      <form class="bar" >
-        Numbers of parking spots:
-        <input id="amount_of_scooters" type="range" name="points" min="100" max="300" onchange="updateTextInput()">
+      </div>
 
->>>>>>> bd543ae712d61f7748cc702d646e8d60e2816314
 
     </form>
     <!-- <button onclick="change_ser()">switch</button> -->
@@ -122,12 +114,12 @@
     </div>
 
     <div class="container">
-        <div id="mapDiv2" style="width: 100%; height: 500px"></div>
-      </div>
+      <div id="mapDiv2" style="width: 100%; height: 500px"></div>
+    </div>
 
-      <div class="container">
-          <div id="mapDiv3" style="width: 100%; height: 500px"></div>
-        </div>
+    <div class="container">
+      <div id="mapDiv3" style="width: 100%; height: 500px"></div>
+    </div>
   </section>
 
   <!-- Services -->
@@ -167,7 +159,7 @@
       </div>
     </div>
   </section>
-<!-- <div class="gify">
+  <!-- <div class="gify">
   <img class="scootgyf" src="../images/Monopattino.gif">
   </div> -->
   <!-- Our Recommendation -->
@@ -344,9 +336,9 @@
   <script>
     // the scooters view -- the defult view
     var map;
-  window.onload = function load() {
-    $("#mapDiv2").css("display", "none")
-    $("#mapDiv3").css("display", "none")
+    window.onload = function load() {
+      $("#mapDiv2").css("display", "none")
+      $("#mapDiv3").css("display", "none")
       var num_of_scotters = document.getElementById('amount_of_scooters').value;
       var url = `http://ilana.localhost.run/getScooters`;
       var geojson = [];
@@ -410,6 +402,7 @@
       console.log("happend")
       $("#mapDiv").css("display", "none")
       $("#mapDiv2").css("display", "block")
+      $(".bar").css("display", "block")
       var num_of_scotters2 = document.getElementById('amount_of_scooters').value;
       console.log(num_of_scotters2)
 
@@ -438,7 +431,7 @@
                 coordinates: [element.cluster.lon, element.cluster.lat]
               },
               properties: {
-                title: element.provider,
+                title: "Parking",
                 "marker-size": "small",
                 "marker-symbol": "parking",
                 "marker-color": "#274d8a",
@@ -470,7 +463,33 @@
         }
       });
     };
+    // $(".switchbutton").click(function () {
+    //   var button = $(".switchbutton");
+    //   if (button.text() == "Switch to parking spots") {
+    //     button.text("Switch to scooters location");
+    //     $(".bar").css("display", "flex");
+    //   } else {
+    //     button.text("Switch to parking spots");
+    //     $(".bar").css("display", "none");
 
+    //   }
+    // });
+
+
+
+
+
+    // $(".switchbutton").click(function () {
+    //   var button = $(".switchbutton");
+    //   if (button.text() == "Switch to parking spots") {
+    //     button.text("Switch to scooters location");
+    //     $(".bar").css("display", "flex");
+    //   } else {
+    //     button.text("Switch to parking spots");
+    //     $(".bar").css("display", "none");
+
+    //   }
+    // });
     var map3;
     function updateTextInput(amount) {
       $("#mapDiv2").css("display", "none")
@@ -500,7 +519,7 @@
                 coordinates: [element.cluster.lon, element.cluster.lat]
               },
               properties: {
-                title: element.text,
+                title: "Parking",
                 "marker-size": "small",
                 "marker-symbol": "parking",
                 "marker-color": "#274d8a",
